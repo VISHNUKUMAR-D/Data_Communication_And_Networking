@@ -1,0 +1,18 @@
+        ALGORITHM FOR FTP_SERVER:
+        
+        1.Create ServerSocket and Socket object and accept the client.
+        2.Create a File to copy the content of the Client's File.
+        3.Get the content of the Client's File using DataInputStream.
+        4.Create object for FileOutputStream and BufferedOutputStream.
+        5.Using the created object write the content into the created File.
+        6.Close all created ServerSocket, Socket and BufferedOutputStream objects.
+
+
+        ALGORITHM FOR FTP_CLIENT:
+
+        1.Create object for Socket and pass hostname and port number as arguement.
+        2.Get the FileName from the user using scan.
+        3.Create FileInputStream and BufferedInputStream object.
+        4.Using the created objects read the contents of the given File and store in a Array.
+        5.Now, write the content to the Server.
+        6.Close all Socket, BufferedInputStream objects.
