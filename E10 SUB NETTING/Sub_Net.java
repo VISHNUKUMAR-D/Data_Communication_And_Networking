@@ -43,8 +43,8 @@ public class Sub_Net{
     System.out.println("NUMBER OF NETWORKS : "+Math.pow(2, power));
     System.out.println("THE HOST PORTION : "+(Math.pow(2, (8-over))-2));
 
-    First_Address = change_address(First_Address,"0", bits);
-    Last_Address = change_address(Last_Address,"1", bits);
+    First_Address = binary_ip_to_integer_ip(First_Address,"0", bits);
+    Last_Address = binary_ip_to_integer_ip(Last_Address,"1", bits);
     System.out.println("FIRST ADDRESS : "+First_Address);
     System.out.println("LAST ADDRESS : "+Last_Address);
     }
@@ -54,19 +54,19 @@ public class Sub_Net{
         return temp.substring(s.length())+s;
     }
 
-    public static String change_address(String address,String temp, int bits){
+    public static String binary_ip_to_integer_ip(String address,String temp, int bits){
         int start = 0, end=8;
         String result = "";
-            for(int i=31; i>31-bits; i--){
-                address = address.substring(0, i)+temp+address.substring(i+1);
-            }
-            for(int i=0; i<4; i++){
-                result += Integer.parseInt(address.substring(start, end),2);
-                if(i!=3)result += ".";
-                start =end;
-                end += 8;
-            }
-            return result;
+        for(int i=31; i>31-bits; i--){
+               address = address.substring(0, i)+temp+address.substring(i+1);
+        }
+        for(int i=0; i<4; i++){
+               result += Integer.parseInt(address.substring(start, end),2);
+               if(i!=3)result += ".";
+               start =end;
+               end += 8;
+        }
+        return result;
     }
 
 }
