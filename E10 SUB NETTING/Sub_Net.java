@@ -26,7 +26,7 @@ public class Sub_Net{
     int mask, start, end, bits, over, power;
     System.out.print("ENTER THE SUBNET MASK :");
     mask = scan.nextInt();
-    bits = 32-mask;
+    bits = mask-24;
 
     if(mask>24){
         over = mask-24;
@@ -43,33 +43,30 @@ public class Sub_Net{
     System.out.println("NUMBER OF NETWORKS : "+Math.pow(2, power));
     System.out.println("THE HOST PORTION : "+(Math.pow(2, (8-over))-2));
 
-    for(int i=31; i>31-bits; i--)
-        First_Address = First_Address.substring(0, i)+"0"+First_Address.substring(i+1);
+    First_Address = change_address(First_Address,"0", bits);
+    Last_Address = change_address(Last_Address,"1", bits);
+    System.out.println("FIRST ADDRESS : "+First_Address);
+    System.out.println("LAST ADDRESS : "+Last_Address);
+    }
     
-    start=0; end=8;
-    System.out.print("FIRST ADDRESS : ");
-    for(int i=0; i<4; i++){
-        System.out.print(Integer.parseInt(First_Address.substring(start, end), 2));
-        if(i!=3)System.out.print(".");
-        start=end; end+=8;
-    }
-
-
-    for(int i=31; i>31-bits; i--)
-        Last_Address = Last_Address.substring(0, i)+"1"+Last_Address.substring(i+1);
-    
-    start=0; end=8;
-    System.out.print("\nLAST ADDRESS : ");
-    for(int i=0; i<4; i++){
-        System.out.print(Integer.parseInt(Last_Address.substring(start, end), 2));
-        if(i!=3)System.out.print(".");
-        start=end; end+=8;
-    }
-
-    }
     public static String appendZeros(String s){
         String temp = "00000000";
         return temp.substring(s.length())+s;
+    }
+
+    public static String change_address(String address,String temp, int bits){
+        int start = 0, end=8;
+        String result = "";
+            for(int i=31; i>31-bits; i--){
+                address = address.substring(0, i)+temp+address.substring(i+1);
+            }
+            for(int i=0; i<4; i++){
+                result += Integer.parseInt(address.substring(start, end),2);
+                if(i!=3)result += ".";
+                start =end;
+                end += 8;
+            }
+            return result;
     }
 
 }
