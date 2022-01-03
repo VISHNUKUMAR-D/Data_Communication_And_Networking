@@ -1,8 +1,7 @@
 import java.io.*;
 import java.net.*;
 public class server{
-    public static void main(String args[]){
-        try{
+    public static void main(String args[]) throws Exception{
             ServerSocket ss = new ServerSocket(4999);
             Socket s = ss.accept();
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
@@ -11,9 +10,5 @@ public class server{
             out.flush();
             out.close();
             s.close();
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
     }
 }
