@@ -14,31 +14,28 @@ import java.util.*;
 import java.net.*;
 
 public class FTP_Client{
-    public static void main(String args[]){
-        try{
-            Socket socket = new Socket("localhost", 4000);
+    public static void main(String args[]) throws Exception{
+            Socket s = new Socket("localhost", 4000);
 
-            DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+            DataOutputStream output = new DataOutputStream(s.getOutputStream());
             Scanner scan = new Scanner(System.in);
 
             System.out.print("ENTER THE FILE NAME : ");
             String Name = scan.next();
+
             File FileName = new File(Name);
 
             FileInputStream FIS = new FileInputStream(FileName);
             BufferedInputStream BIS = new BufferedInputStream(FIS);
+
             long Length = FileName.length();
+
             byte[] Content = new byte[(int)Length];
             BIS.read(Content, 0, (int)Length);
             output.write(Content);
 
-            output.flush();
-            socket.close();
+            s.close();
             BIS.close();
             System.out.println("FILE SENT SUCCESSFULLY !");
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
     }
 }
