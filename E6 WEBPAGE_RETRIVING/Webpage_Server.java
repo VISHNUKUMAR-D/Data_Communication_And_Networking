@@ -12,16 +12,14 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-
 public class Webpage_Server{
-    public static void main(String args[]){
-        try{
-            ServerSocket Server_Socket = new ServerSocket(3000);
-            Socket Socket = Server_Socket.accept();
-            DataInputStream input = new DataInputStream(Socket.getInputStream());
-            DataOutputStream output = new DataOutputStream(Socket.getOutputStream());
+    public static void main(String args[]) throws Exception{
+            ServerSocket ss = new ServerSocket(3000);
+            Socket s = ss.accept();
+            DataInputStream input = new DataInputStream(s.getInputStream());
+            DataOutputStream output = new DataOutputStream(s.getOutputStream());
 
-            String String = (String)input.readUTF();
+            String String = input.readUTF();
             URL url = new URL(String);
             Scanner scan = new Scanner(url.openStream());
 
@@ -34,16 +32,7 @@ public class Webpage_Server{
             data = data.replaceAll(">", ">\n");
             output.writeUTF(data);
 
-            output.flush();
-            output.close();
-            input.close();
-            scan.close();
-            Socket.close();
-            Server_Socket.close();
-
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
+            s.close();
+            ss.close();
     }
 }
