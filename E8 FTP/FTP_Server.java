@@ -13,29 +13,23 @@ import java.io.*;
 import java.net.*;
 
 public class FTP_Server{
-    public static void main(String args[]){
-        try{
-            ServerSocket Server = new ServerSocket(4000);
-            Socket socket = Server.accept();
+    public static void main(String args[]) throws Exception{
+            ServerSocket ss = new ServerSocket(4000);
+            Socket s = ss.accept();
 
             byte[] Content = new byte[10000];
-            String FileName = "Copied_File.txt";
-
-            DataInputStream input = new DataInputStream(socket.getInputStream());
+            
+            DataInputStream input = new DataInputStream(s.getInputStream());
             int size = input.read(Content);
 
-            FileOutputStream FOS = new FileOutputStream(FileName);
+            FileOutputStream FOS = new FileOutputStream("Copied_File.txt");
             BufferedOutputStream BOS = new BufferedOutputStream(FOS);
 
             BOS.write(Content, 0, size);
             System.out.println("FILE SAVED SUCCESSFULLY !");
 
-            Server.close();
-            socket.close();
+            ss.close();
+            s.close();
             BOS.close();
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
     }
 }
