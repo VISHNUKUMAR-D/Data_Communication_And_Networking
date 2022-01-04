@@ -27,14 +27,17 @@ import java.util.*;
          Data_word = scan.nextLine();
          System.out.print("ENTER THE GENERATOR POLYNOMIAL : ");
          Generator = scan.nextLine();
+
          for(int i=0; i<Generator.length()-1; i++){
             k += "0";
          }
+
          data = Data_word + k;
-         System.out.println("\nMODIFIED DATA_WORD "+(Generator.length()-1)+" ZEROS : "+data);
+         System.out.println("\nMODIFIED DATA_WORD WITH "+(Generator.length()-1)+" ZEROS : "+data);
          code = div(data, Generator);
 
          data = Data_word + code;
+
          System.out.println("ENCODED DATA THAT IS SENT TO THE RECEIVER :"+data);
 
          System.out.print("\nENTER THE ENCODED DATA THAT IS RECEIVED : ");
@@ -46,20 +49,22 @@ import java.util.*;
              System.out.println("THE RECEIVED CODE HAS NO ERROR");
 
      }
+     
 
      public static String div(String data, String Generator){
         int length = Generator.length();
-        String one_zero = "01";
         code = data.substring(0, Generator.length());
 
         while(length < data.length()){
-            if(code.charAt(0) == one_zero.charAt(0)){
+            if(code.charAt(0) == '0'){
                 code = code.substring(1, code.length());
                 code += data.charAt(length++);
             }
             process_XOR();    
         }
+        if(code.charAt(0)=='1')process_XOR();
         return (code = code.substring(1, code.length()));
+        
     }
 
     public static void process_XOR(){
@@ -73,4 +78,5 @@ import java.util.*;
         remainder = "";
     }
 }
+ 
  
