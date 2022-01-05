@@ -15,14 +15,12 @@ import java.net.*;
 import java.util.*;
 
 public class SW_Sender{
-    public static void main(String args[]){
-        try{
-            Socket socket = new Socket("localhost", 1000);
-
+    public static void main(String args[]) throws Exception{
+            Socket socket = new Socket("localhost", 3000);
             DataInputStream input = new DataInputStream(socket.getInputStream());
             DataOutputStream output = new DataOutputStream(socket.getOutputStream());
             Scanner scan = new Scanner(System.in);
-            HashSet<Integer> Set = new HashSet<Integer>();
+            HashSet<String> Set = new HashSet<String>();
 
 
             System.out.print("ENTER THE WINDOW SIZE : ");
@@ -37,6 +35,7 @@ public class SW_Sender{
             for(int i = 0 ; i<frame; i++){
                 data[i] = scan.next();
             }
+            
             int i = 0;
             while(i < frame){
                 if(i+window >= frame){
@@ -44,25 +43,19 @@ public class SW_Sender{
                     output.writeUTF(Integer.toString(frame-i));
                     for(i = i; i<frame; i++){
                         output.writeUTF(data[i]);
-                        Set.add(i);
+                        Set.add(input.readUTF());
                     }
                 }
                 else{
                     System.out.println("SENDING "+window+" FRAMES...");
                     output.writeUTF(Integer.toString(window));
                     for(int j = 0; j<window; j++){
-                        output.writeUTF(data[i]);
-                        Set.add(i);
-                        i++;
+                        output.writeUTF(data[i++]);
+                        Set.add(input.readUTF());
                     }
                 }
-                int acknowledgement = Integer.parseInt((String)input.readUTF());
                 System.out.println("ACKNOWLEDGEMENT RECEIVED FOR THE FRAMES : "+Set);
                 Set.clear();
             }
         }
-        catch(Exception e){
-            System.out.println(e);
-        }
-    }
 }
